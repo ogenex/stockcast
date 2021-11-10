@@ -17,7 +17,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-logo_url = '../images/zetaris.200.png'
+logo_url = 'images/zetaris.200.png'
 st.image(logo_url, width=220)
 
 st.title('Stock Price Forecast App')
@@ -40,8 +40,8 @@ data_load_state = st.text('Loading data...')
 data = load_data(selected_stock)
 data_load_state.text('')
 
-if st.checkbox('Show stock price data'):
-    st.subheader('Raw data')
+if st.checkbox('Show historical stock data'):
+    st.subheader('Raw historical data')
     st.write(data.tail())
 
 # Plot raw data
@@ -68,7 +68,11 @@ if st.checkbox('Show stock forecast data'):
     st.subheader('Forecast data')
     st.write(forecast.tail())
     
-st.write(f'Forecast plot for {n_years} years')
+if n_years == 1:
+    st.write(f'Forecast plot for 1 year')
+else:
+    st.write(f'Forecast plot for {n_years} years')
+
 fig1 = plot_plotly(m, forecast)
 st.plotly_chart(fig1)
 
