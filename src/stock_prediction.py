@@ -10,10 +10,17 @@ from plotly import graph_objs as go
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
+st.set_page_config(
+    page_title="Stock Price Forecast App",
+    page_icon=None,
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
 logo_url = '../images/zetaris.200.png'
 st.image(logo_url, width=220)
 
-st.title('Stock Forecast App')
+st.title('Stock Price Forecast App')
 
 stocks = ('GOOG', 'AAPL', 'MSFT', 'TSLA', 'CBA.AX')
 selected_stock = st.selectbox('Select stock for prediction', stocks)
