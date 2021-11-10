@@ -10,7 +10,7 @@ from plotly import graph_objs as go
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
-logo_url = '/images/zetaris.200.png'
+logo_url = 'images/zetaris.200.png'
 st.image(logo_url, width=220)
 
 st.title('Stock Forecast App')
