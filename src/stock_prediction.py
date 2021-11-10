@@ -49,8 +49,8 @@ def plot_raw_data():
 	fig = go.Figure()
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
-	fig.layout.update(title_text='Time Series data with Rangeslider', xaxis_rangeslider_visible=True)
-	st.plotly_chart(fig)
+	fig.layout.update(title_text='Stock Price Time Series with Rangeslider', xaxis_rangeslider_visible=True)
+	st.plotly_chart(fig, use_container_width=True)
 	
 plot_raw_data()
 
@@ -76,6 +76,6 @@ else:
 fig1 = plot_plotly(m, forecast)
 st.plotly_chart(fig1)
 
-st.write("Forecast components")
+st.write("Forecast Components")
 fig2 = m.plot_components(forecast)
 st.write(fig2)
