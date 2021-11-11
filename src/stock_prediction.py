@@ -44,12 +44,13 @@ if st.checkbox('Show historical stock data'):
     st.subheader('Raw historical data')
     st.write(data.tail())
 
+st.subheader('Stock Price Time Series')
 # Plot raw data
 def plot_raw_data():
 	fig = go.Figure()
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
 	fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
-	fig.layout.update(title_text='Stock Price Time Series with Rangeslider', xaxis_rangeslider_visible=True)
+	fig.layout.update(xaxis_rangeslider_visible=True)
 	st.plotly_chart(fig, use_container_width=True)
 	
 plot_raw_data()
@@ -68,14 +69,11 @@ if st.checkbox('Show stock forecast data'):
     st.subheader('Forecast data')
     st.write(forecast.tail())
     
-if n_years == 1:
-    st.write(f'Forecast plot for 1 year')
-else:
-    st.write(f'Forecast plot for {n_years} years')
+st.subheader('Stock Price Forecast')
 
 fig1 = plot_plotly(m, forecast)
 st.plotly_chart(fig1)
 
-st.write("Forecast Components")
+st.subheader('Forecast Components')
 fig2 = m.plot_components(forecast)
 st.write(fig2)
