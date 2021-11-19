@@ -17,8 +17,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-logo_url = 'images/zetaris.200.png'
-st.image(logo_url, width=220)
+#logo_url = '../images/zetaris.200.png'
+#st.image(logo_url, width=220)
 
 st.title('Stock Price Forecast App')
 
@@ -40,20 +40,28 @@ data_load_state = st.text('Loading data...')
 data = load_data(selected_stock)
 data_load_state.text('')
 
+if st.checkbox('Show stock info'):
+    st.subheader('Stock Info')
+    stock = yf.Ticker(selected_stock)
+    st.write(stock.info)
+
+st.subheader('Historical Stock Price')
+# Plot raw data
+def plot_raw_data():
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
+    fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
+    fig.update_layout(yaxis_title=selected_stock)
+    fig.layout.update(xaxis_rangeslider_visible=True)
+    fig.layout.update(legend_orientation="h")
+    st.plotly_chart(fig, use_container_width=True)
+	
+plot_raw_data()
+
 if st.checkbox('Show historical stock data'):
     st.subheader('Raw historical data')
     st.write(data.tail())
 
-st.subheader('Stock Price Time Series')
-# Plot raw data
-def plot_raw_data():
-	fig = go.Figure()
-	fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
-	fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
-	fig.layout.update(xaxis_rangeslider_visible=True)
-	st.plotly_chart(fig, use_container_width=True)
-	
-plot_raw_data()
 
 # Predict forecast with Prophet.
 df_train = data[['Date','Close']]
@@ -64,16 +72,32 @@ m.fit(df_train)
 future = m.make_future_dataframe(periods=period)
 forecast = m.predict(future)
 
+# add horizontal spacing
+st.write(' ')
+st.write(' ')
+st.write(' ')
+
+st.subheader('Stock Price Forecast')
+
+fig1 = plot_plotly(m, forecast)
+# set y-axis label
+fig1.update_layout(yaxis_title=selected_stock)
+# set x-axis label to blank
+fig1.update_layout(xaxis_title='')
+st.plotly_chart(fig1, use_container_width=True)
+
 # Show and plot forecast
 if st.checkbox('Show stock forecast data'):
     st.subheader('Forecast data')
     st.write(forecast.tail())
-    
-st.subheader('Stock Price Forecast')
 
-fig1 = plot_plotly(m, forecast)
-st.plotly_chart(fig1)
 
+# add horizontal spacing
+st.write(' ')
+st.write(' ')
+st.write(' ')
+
+# forecaset components
 st.subheader('Forecast Components')
 fig2 = m.plot_components(forecast)
 st.write(fig2)
