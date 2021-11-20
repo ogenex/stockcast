@@ -18,9 +18,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-#logo_url = '../images/zetaris.200.png'
-#st.image(logo_url, width=220)
-
 st.title('Stock Price Forecast App')
 st.subheader('')
 
@@ -44,7 +41,7 @@ st.markdown(
 st.sidebar.header('')
 
 # get list of stocks from data/djia_stocks.csv
-stocks_df = pd.read_csv('/data/djia.tsv', sep='\t')
+stocks_df = pd.read_csv('data/djia.tsv', sep='\t')
 stocks = list(stocks_df['symbol'].unique())
 stocks.extend(('GOOG', 'TSLA', 'CBA.AX'))
 stocks.insert(0, '')
