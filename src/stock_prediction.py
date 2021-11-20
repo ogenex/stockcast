@@ -1,7 +1,7 @@
 # pip install streamlit fbprophet yfinance plotly
 import streamlit as st
 from datetime import date
-
+from os.path import dirname, join
 import yfinance as yf
 from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
@@ -10,6 +10,8 @@ import pandas as pd
 
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
+CWD = dirname(__file__)
+st.subheader(CWD)
 
 st.set_page_config(
     page_title="Stock Price Forecast App",
@@ -41,7 +43,7 @@ st.markdown(
 st.sidebar.header('')
 
 # get list of stocks from data/djia_stocks.csv
-stocks_df = pd.read_csv('data/djia.tsv', sep='\t')
+stocks_df = pd.read_csv(join(CWD, '../data/djia.tsv'), sep='\t')
 stocks = list(stocks_df['symbol'].unique())
 stocks.extend(('GOOG', 'TSLA', 'CBA.AX'))
 stocks.insert(0, '')
