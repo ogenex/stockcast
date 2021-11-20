@@ -44,7 +44,7 @@ st.markdown(
 st.sidebar.header('')
 
 # get list of stocks from data/djia_stocks.csv
-stocks_df = pd.read_csv('../data/djia.tsv', sep='\t')
+stocks_df = pd.read_csv('/data/djia.tsv', sep='\t')
 stocks = list(stocks_df['symbol'].unique())
 stocks.extend(('GOOG', 'TSLA', 'CBA.AX'))
 stocks.insert(0, '')
