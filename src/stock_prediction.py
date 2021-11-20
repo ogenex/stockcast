@@ -19,8 +19,8 @@ st.set_page_config(
 
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
-CWD = dirname(__file__)
-st.subheader(CWD)
+CWD = dirname(__file__) # /app/stockcast/src
+# main title
 st.title('Stock Price Forecast App')
 st.subheader('')
 
