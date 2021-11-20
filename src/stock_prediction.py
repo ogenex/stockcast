@@ -8,11 +8,7 @@ from fbprophet.plot import plot_plotly
 from plotly import graph_objs as go
 import pandas as pd
 
-START = "2015-01-01"
-TODAY = date.today().strftime("%Y-%m-%d")
-CWD = dirname(__file__)
-st.subheader(CWD)
-
+# can only be called once per app, and must be called as the first Streamlit command
 st.set_page_config(
     page_title="Stock Price Forecast App",
     page_icon=None,
@@ -20,6 +16,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+
+START = "2015-01-01"
+TODAY = date.today().strftime("%Y-%m-%d")
+CWD = dirname(__file__)
+st.subheader(CWD)
 st.title('Stock Price Forecast App')
 st.subheader('')
 
