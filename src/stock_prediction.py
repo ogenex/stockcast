@@ -56,6 +56,7 @@ period = n_years * 365
 
 # write stock info to sidebar
 if selected_stock:
+    load_info = st.info('Loading data...')
     # get company info from yfinance
     stock = yf.Ticker(selected_stock)
     info = stock.info
@@ -78,9 +79,10 @@ def load_data(ticker):
     return data
 
 if selected_stock:
-    data_load_state = st.text('Loading data...')
+    #data_load_state = st.text('Loading data...')
     data = load_data(selected_stock)
-    data_load_state.text('')
+    # delete load_info
+    load_info.empty()
 
 #if selected_stock and st.checkbox('Show stock info'):
 #    st.subheader('Stock Info')
@@ -115,6 +117,7 @@ if selected_stock and st.checkbox('Show historical stock data'):
 
 if selected_stock:
     # Predict forecast with Prophet.
+    forecast_load_info = st.info('Forecast prediction...')
     df_train = data[['Date','Close']]
     df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
@@ -128,6 +131,7 @@ if selected_stock:
     st.write(' ')
     st.write(' ')
 
+    forecast_load_info.empty()
     st.subheader('Stock Price Forecast')
 
     fig1 = plot_plotly(m, forecast)
