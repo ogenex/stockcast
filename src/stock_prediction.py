@@ -46,7 +46,7 @@ st.sidebar.header('')
 # get list of stocks from data/djia_stocks.csv
 stocks_df = pd.read_csv(join(CWD, '../data/djia.tsv'), sep='\t')
 stocks = list(stocks_df['symbol'].unique())
-stocks.extend(('GOOG', 'TSLA', 'CBA.AX'))
+stocks.extend(('GOOG', 'TSLA'))
 stocks.insert(0, '')
 stocks.sort()
 selected_stock = st.selectbox('Select stock for prediction', stocks)
@@ -63,8 +63,7 @@ if selected_stock:
     cname = info['longName'] 
     st.sidebar.header(cname)
     # get and display logo
-    #logo_url = info['logo_url']
-    #st.sidebar.image(logo_url, width=100)
+    logo_url = info['logo_url']
     # for each key in info, display key as a header and value as a text
     for key, value in info.items():
         st.sidebar.subheader(key)
@@ -100,7 +99,13 @@ def plot_raw_data():
     st.plotly_chart(fig, use_container_width=True)
 
 if selected_stock:
-    st.header(cname)
+    
+    col1, col2, col3 = st.columns((4, 2, 1))
+    col3.image(logo_url, width=50)
+    col1.header(cname)
+    currentPrice = info.get('currentPrice')
+    prevClose = info.get('previousClose')
+    col2.metric(label="Last Price", value=currentPrice, delta='%.2f' % (currentPrice - prevClose))
     st.subheader('Historical Stock Price')
     plot_raw_data()
 
