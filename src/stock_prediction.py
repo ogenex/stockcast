@@ -3,8 +3,8 @@ import streamlit as st
 from datetime import date
 from os.path import dirname, join
 import yfinance as yf
-from fbprophet import Prophet
-from fbprophet.plot import plot_plotly
+from prophet import Prophet
+from prophet.plot import plot_plotly
 from plotly import graph_objs as go
 import pandas as pd
 
@@ -69,7 +69,7 @@ if selected_stock:
     cname = info['longName'] 
     st.sidebar.header(cname)
     # get and display logo
-    logo_url = info['logo_url']
+    logo_url = info.get('logo_url', '')
     # for each key in info, display key as a header and value as a text
     for key, value in info.items():
         st.sidebar.subheader(key)
@@ -77,7 +77,7 @@ if selected_stock:
 
 
 
-@st.cache
+@st.cache_data
 def load_data(ticker):
     data = yf.download(ticker, START, TODAY)
     data.reset_index(inplace=True)
@@ -108,7 +108,7 @@ def plot_raw_data():
 if selected_stock:
     
     col1, col2, col3 = st.columns((4, 2, 1))
-    col3.image(logo_url, width=50)
+    #col3.image(logo_url, width=50)
     col1.header(cname)
     currentPrice = info.get('currentPrice')
     prevClose = info.get('previousClose')
